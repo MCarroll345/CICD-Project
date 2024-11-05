@@ -1,6 +1,16 @@
 package ie.atu.bam.Standerd;
+
 import java.sql.*;
 public class DatabaseTester {
+=======
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseTester {
+
+
         public static void main(String[] args) {
 
             Connection connection = null;
