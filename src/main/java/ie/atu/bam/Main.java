@@ -1,4 +1,4 @@
-package ie.atu.bam.pool;
+package ie.atu.bam;
 
 import java.sql.SQLException;
 public class Main {
