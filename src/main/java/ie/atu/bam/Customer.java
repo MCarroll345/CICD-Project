@@ -4,10 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,8 +20,12 @@ public class Customer {
     private String name;
 
     @NotBlank
+    @Min(8)
+    @Max(20)
     private String username;
 
+    @Min(8)
+    @Max(20)
     @NotBlank
     private String password;
 
