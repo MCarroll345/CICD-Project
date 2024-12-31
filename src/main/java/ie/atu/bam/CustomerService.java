@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CustomerServices {
-    private List<Customer> myList = new ArrayList<>();
+public class CustomerService {
 
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
-    public CustomerServices(CustomerRepository customerRepository){
+    public List<Customer> getCustomers(){
+        return customerRepository.findAll();
+    }
+
+    public CustomerService(CustomerRepository customerRepository){
         this.customerRepository = customerRepository;
     }
 
@@ -20,6 +23,7 @@ public class CustomerServices {
         System.out.println("Customer created: " + customer);
     }
 
+    /*
     public Customer getCustomer(String username){
         for(Customer c:myList){
             if(c.getUsername() == username){
@@ -27,8 +31,7 @@ public class CustomerServices {
             }
         }
 
-
         return new Customer();
-    }
+    }*/
 }
 

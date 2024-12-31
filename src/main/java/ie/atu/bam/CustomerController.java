@@ -1,34 +1,49 @@
 package ie.atu.bam;
 
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/customer")
 @RestController
 public class CustomerController {
-    private final CustomerServices customerServices;
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerServices customerServices) {
-        this.customerServices = customerServices;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
-    @GetMapping("/customerUser")
-    public ResponseEntity<?> getCustomer(@PathVariable String username){
-        if(username.length() < 8 || username.isBlank()){
+    /*
+    @GetMapping("/{customerUser}")
+    public ResponseEntity<?> getCustomer(@PathVariable String customerUser){
+        if(customerUser.length() < 8 || customerUser.isBlank()){
             return ResponseEntity.badRequest().body("Username is invalid");
         }
 
-        Customer customer = customerServices.getCustomer(username);
+        Customer customer = customerService.getCustomer(customerUser);
 
         if(customer == null){
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(customer);
+    }*/
+
+    @GetMapping("/getAll")
+    public List<Customer> getCustomers(){
+        return customerService.getCustomers();
+    }
+
+
+
+    @PostMapping("/createPerson")
+    public ResponseEntity<String>create(@Valid @RequestBody Customer customer) {
+        customerService.createCustomer(customer);
+        return new ResponseEntity<>("Person created successfully", HttpStatus.OK);
     }
 
 
