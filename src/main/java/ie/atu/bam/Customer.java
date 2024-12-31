@@ -20,12 +20,8 @@ public class Customer {
     private String name;
 
     @NotBlank
-    @Min(8)
-    @Max(20)
     private String username;
 
-    @Min(8)
-    @Max(20)
     @NotBlank
     private String password;
 
@@ -38,7 +34,6 @@ public class Customer {
     @NotBlank
     private String accountId;
 
-    @NotEmpty
     private float bankBalance;
 
 }
