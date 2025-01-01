@@ -19,10 +19,11 @@ public class Customer {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Please provide a username")
     private String username;
 
-    @NotBlank
+    @Size(min = 8, message = "Password must have at least 8 characters")
+    @NotBlank(message = "Please provide a password")
     private String password;
 
     @Min(16)
@@ -33,6 +34,7 @@ public class Customer {
 
     @NotBlank
     private String accountId;
+
 
     private float bankBalance;
 
