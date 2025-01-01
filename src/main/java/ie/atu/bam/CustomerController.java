@@ -38,7 +38,12 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
-
+    
+    @PutMapping("/update/{name}/{upname}")
+    public String updateName(@PathVariable String name, @PathVariable String upname){
+        customerService.updateName(name,upname);
+        return "Updated";
+    }
 
     @PostMapping("/createPerson")
     public ResponseEntity<String>create(@Valid @RequestBody Customer customer) {

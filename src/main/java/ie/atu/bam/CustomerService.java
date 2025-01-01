@@ -1,5 +1,6 @@
 package ie.atu.bam;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +22,10 @@ public class CustomerService {
     public void createCustomer(Customer customer){
         customerRepository.save(customer);
         System.out.println("Customer created: " + customer);
+    }
+
+    public void updateName(String name, String upname){
+        customerRepository.save(customerRepository.findByUsername(name)).setUsername(upname);
     }
 
     /*
