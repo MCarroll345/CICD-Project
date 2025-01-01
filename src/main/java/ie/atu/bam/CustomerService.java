@@ -20,15 +20,16 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public void createCustomer(Customer customer){
+    public int createCustomer(Customer customer){
         if(!customerRepository.existsByUsernameAndPassword(customer.getUsername(), customer.getPassword())){
             customerRepository.save(customer);
             System.out.println("Customer created: " + customer);
+            return 1;
         }
         else {
             System.out.println("Username already taken");
+            return 0;
         }
-
     }
 
     public void updateName(String name, String upname){

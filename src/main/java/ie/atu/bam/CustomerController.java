@@ -4,6 +4,7 @@ package ie.atu.bam;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,10 +35,14 @@ public class CustomerController {
         return customerService.loginCust(usrnm,psswrd);
     }
 
-    @PostMapping("/createPerson")
-    public ResponseEntity<String>create(@Valid @RequestBody Customer customer) {
-        customerService.createCustomer(customer);
-        return new ResponseEntity<>("Person created successfully", HttpStatus.OK);
+    @PostMapping("/createCustomer")
+    public ResponseEntity<String> createCustomer(@Valid @RequestBody Customer customer) {
+        if (customerService.createCustomer(customer) == 1) {
+            return new ResponseEntity<>("Person created successfully", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Username taken", HttpStatus.PRECONDITION_FAILED);
+        }
     }
 
 
