@@ -1,10 +1,9 @@
 package ie.atu.bam;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,9 +11,20 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     List<Customer> findByUsername(String username);
 
-    //List<Customer>
-    List<Customer> findByPhonenm(int phonenm);
-    List<Customer> findByEmail(String email);
+    @Transactional
+    @Modifying
+    @Query("update Customer c set c.address = ?2 where c.address =?1")
+    int addressUpdate(String oldaddress, String newaddress);
+
+    @Transactional
+    @Modifying
+    @Query("update Customer c set c.phonenm = ?2 where c.phonenm =?1")
+    int phonenmUpdate(int oldphonenm, int newphonenm);
+
+    @Transactional
+    @Modifying
+    @Query("update Customer c set c.email = ?2 where c.email =?1")
+    int emailUpdate(String oldemail, String newemail);
 
     boolean existsByUsernameAndPassword(String username, String password);
 

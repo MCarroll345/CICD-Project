@@ -32,18 +32,46 @@ public class CustomerService {
         }
     }
 
-    public void updateAddress(String olda, String newa){
-        //customerRepository.
-        return ;
+    public int updateAddress(String olda, String newa){
+        if(customerRepository.addressUpdate(olda,newa) == 1){
+            System.out.println("Update successful");
+            return 1;
+        }
+        else{
+            System.out.println("Update failed");
+            return 0;
+        }
+    }
+
+    public int updateEmail(String olde, String newe){
+        if(customerRepository.addressUpdate(olde,newe) == 1){
+            System.out.println("Update successful");
+            return 1;
+        }
+        else{
+            System.out.println("Update failed");
+            return 0;
+        }
+    }
+
+    public int updatePhonenm(int oldnm, int newnm){
+        if(customerRepository.phonenmUpdate(oldnm,newnm) == 1){
+            System.out.println("Update successful");
+            return 1;
+        }
+        else{
+            System.out.println("Update failed");
+            return 0;
+        }
     }
 
     public List<Customer> loginCust(String usrnm, String psswrd){
         if(customerRepository.existsByUsernameAndPassword(usrnm, psswrd)){
-            System.out.println("Success");
+            System.out.println("Login successful");
             return customerRepository.findByUsername(usrnm);
         }
         else {
-            System.out.println("Fail");
+            System.out.println("Login failed");
             return null;
         }
     }

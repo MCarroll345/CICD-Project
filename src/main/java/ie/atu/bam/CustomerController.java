@@ -23,18 +23,6 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
-    
-    @PutMapping("/updateAddress/{oldaddress}/{newaddress}")
-    public String updateAddress(@PathVariable String oldaddress, @PathVariable String newaddress){
-        customerService.updateAddress(oldaddress,newaddress);
-        return "Successfully Updated";
-    }
-
-    @GetMapping("/login/{usrnm}/{psswrd}")
-    public List<Customer> loginCust(@PathVariable String usrnm,@PathVariable String psswrd){
-        return customerService.loginCust(usrnm,psswrd);
-    }
-
     @PostMapping("/createCustomer")
     public ResponseEntity<String> createCustomer(@Valid @RequestBody Customer customer) {
         if (customerService.createCustomer(customer) == 1) {
@@ -45,5 +33,39 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/login/{usrnm}/{psswrd}")
+    public List<Customer> loginCust(@PathVariable String usrnm,@PathVariable String psswrd){
+        return customerService.loginCust(usrnm,psswrd);
+    }
+
+    @PutMapping("/updateAddress/{oldaddress}/{newaddress}")
+    public ResponseEntity<String> updateAddress(@PathVariable String oldaddress, @PathVariable String newaddress){
+        if(customerService.updateAddress(oldaddress,newaddress)==1){
+            return new ResponseEntity<>("Update Successful", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Update failed", HttpStatus.PRECONDITION_FAILED);
+        }
+    }
+
+    @PutMapping("/updateEmail/{oldemail}/{newemail}")
+    public ResponseEntity<String> updateEmail(@PathVariable String oldemail, @PathVariable String newemail){
+        if(customerService.updateEmail(oldemail,newemail)==1){
+            return new ResponseEntity<>("Update Successful", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Update failed", HttpStatus.PRECONDITION_FAILED);
+        }
+    }
+
+    @PutMapping("/updatePhonenm/{oldphonenm}/{newphonenm}")
+    public ResponseEntity<String> updatePhonenm(@PathVariable int oldphonenm, @PathVariable int newphonenm){
+        if(customerService.updatePhonenm(oldphonenm,newphonenm)==1){
+            return new ResponseEntity<>("Update Successful", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Update failed", HttpStatus.PRECONDITION_FAILED);
+        }
+    }
 
 }
