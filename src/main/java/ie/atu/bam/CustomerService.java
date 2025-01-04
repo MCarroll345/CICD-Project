@@ -32,7 +32,8 @@ public class CustomerService {
         }
     }
 
-    public void updateName(String name, String upname){
+    public void updateAddress(String olda, String newa){
+        //customerRepository.
         return ;
     }
 

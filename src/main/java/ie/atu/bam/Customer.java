@@ -32,10 +32,16 @@ public class Customer {
     @Email
     private String email;
 
+    @NotNull
+    private int phonenm;
+
     @NotBlank
     private String accountId;
 
+    @NotBlank
+    private String address;
 
+    @NotNull
     private float bankBalance;
 
 }

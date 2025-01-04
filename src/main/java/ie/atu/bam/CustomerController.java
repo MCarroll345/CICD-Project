@@ -24,10 +24,10 @@ public class CustomerController {
     }
 
     
-    @PutMapping("/update/{name}/{upname}")
-    public String updateName(@PathVariable String name, @PathVariable String upname){
-        customerService.updateName(name,upname);
-        return "Updated";
+    @PutMapping("/updateAddress/{oldaddress}/{newaddress}")
+    public String updateAddress(@PathVariable String oldaddress, @PathVariable String newaddress){
+        customerService.updateAddress(oldaddress,newaddress);
+        return "Successfully Updated";
     }
 
     @GetMapping("/login/{usrnm}/{psswrd}")
