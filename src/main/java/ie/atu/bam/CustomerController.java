@@ -11,11 +11,15 @@ import java.util.List;
 @RequestMapping("/customer")
 @RestController
 public class CustomerController {
+    private final BankClient bankClient;
     private final CustomerService customerService;
-
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(BankClient bankClient, CustomerService customerService) {
+        this.bankClient = bankClient;
         this.customerService = customerService;
     }
+
+
+
 
     @GetMapping("/getAll")
     public List<Customer> getCustomers(){
@@ -33,24 +37,18 @@ public class CustomerController {
     }
 
     @GetMapping("/login/{usrnm}/{psswrd}")
-    public List<Customer> loginCust(@PathVariable String usrnm,@PathVariable String psswrd){
+    public List<Object> loginCust(@Valid @PathVariable String usrnm,@PathVariable String psswrd){
         return customerService.loginCust(usrnm,psswrd);
     }
 
-    @PutMapping("withDep/usrnm/{inout}/{num}")
-    public ResponseEntity<?> withdrawDeposit(@PathVariable String usrnm,@PathVariable String inout, @PathVariable int num){
-        if(num <= 0){
-            return new ResponseEntity<String>("Cannot be a negative number", HttpStatus.BAD_REQUEST);
-        }
-        switch (customerService.withDep(usrnm,inout,num)){
-            case
-        }
-
+    @PutMapping("withDep/{uID}/{inout}/{num}")
+    public ResponseEntity<String> withdrawDeposit(@Valid @PathVariable Long uID,@PathVariable String inout, @PathVariable float num){
+        return bankClient.withdrawDeposit(uID, inout, num);
     }
 
 
     @PutMapping("/updateAddress/{oldaddress}/{newaddress}")
-    public ResponseEntity<?> updateAddress(@PathVariable String oldaddress, @PathVariable String newaddress){
+    public ResponseEntity<?> updateAddress(@Valid @PathVariable String oldaddress, @PathVariable String newaddress){
         if(customerService.updateAddress(oldaddress,newaddress)==1){
             return new ResponseEntity<>("Update Successful", HttpStatus.OK);
         }
@@ -60,7 +58,7 @@ public class CustomerController {
     }
 
     @PutMapping("/updateEmail/{oldemail}/{newemail}")
-    public ResponseEntity<?> updateEmail(@PathVariable String oldemail, @PathVariable String newemail){
+    public ResponseEntity<?> updateEmail(@Valid @PathVariable String oldemail, @PathVariable String newemail){
         if(customerService.updateEmail(oldemail,newemail)==1){
             return new ResponseEntity<>("Update Successful", HttpStatus.OK);
         }
@@ -70,7 +68,7 @@ public class CustomerController {
     }
 
     @PutMapping("/updatePhonenm/{oldphonenm}/{newphonenm}")
-    public ResponseEntity<?> updatePhonenm(@PathVariable int oldphonenm, @PathVariable int newphonenm){
+    public ResponseEntity<?> updatePhonenm(@Valid @PathVariable int oldphonenm, @PathVariable int newphonenm){
         if(customerService.updatePhonenm(oldphonenm,newphonenm)==1){
             return new ResponseEntity<>("Update Successful", HttpStatus.OK);
         }
