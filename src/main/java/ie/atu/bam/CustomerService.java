@@ -1,6 +1,6 @@
 package ie.atu.bam;
 
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,19 +10,23 @@ import java.util.Objects;
 @Service
 public class CustomerService {
 
-    private final CustomerRepository customerRepository;
+    private BankClient bankClient;
+    private CustomerRepository customerRepository;
+
+    public CustomerService(BankClient bankClient, CustomerRepository customerRepository) {
+        this.bankClient = bankClient;
+        this.customerRepository = customerRepository;
+    }
 
     public List<Customer> getCustomers(){
         return customerRepository.findAll();
     }
 
-    public CustomerService(CustomerRepository customerRepository){
-        this.customerRepository = customerRepository;
-    }
 
     public int createCustomer(Customer customer){
         if(!customerRepository.existsByUsernameAndPassword(customer.getUsername(), customer.getPassword())){
             customerRepository.save(customer);
+            bankClient.makeAccount(customer.getId());
             System.out.println("Customer created: " + customer);
             return 1;
         }
@@ -65,47 +69,13 @@ public class CustomerService {
         }
     }
 
-    public int withDep(String usrnm, String inout, float num){
-        float newblnc = 0;
-        if(inout == "withdraw"){
-            if(customerRepository.balanceReturn(usrnm) < num){
-                System.out.println("Insufficient funds");
-                return 1;
-            }
-            else{
-                newblnc = customerRepository.balanceReturn(usrnm) - num;
-                customerRepository.newBalance(newblnc, usrnm);
-                return 2;
-            }
-        } else if (inout == "deposit") {
-
-        }
-        switch (inout){
-            case "withdraw":
-                if(customerRepository.balanceReturn(usrnm) < num){
-                    System.out.println("Insufficient funds");
-                    return 1;
-                }
-                else{
-                    newblnc = customerRepository.balanceReturn(usrnm) - num;
-                    customerRepository.newBalance(newblnc, usrnm);
-                    return 2;
-                }
-                break;
-            case "deposit":
-                newblnc = customerRepository.balanceReturn(usrnm) + num;
-                customerRepository.newBalance(newblnc, usrnm);
-                return 3;
-                break;
-            default:
-
-        }
-    }
-
-    public List<Customer> loginCust(String usrnm, String psswrd){
+    public List<Object> loginCust(String usrnm, String psswrd){
         if(customerRepository.existsByUsernameAndPassword(usrnm, psswrd)){
             System.out.println("Login successful");
-            return customerRepository.findByUsername(usrnm);
+            List<Object> CombList = new ArrayList<Object>();
+            CombList.addAll(customerRepository.findByUsername(usrnm));
+            CombList.addAll(bankClient.loginAcc(customerRepository.getuID(usrnm)));
+            return CombList;
         }
         else {
             System.out.println("Login failed");
