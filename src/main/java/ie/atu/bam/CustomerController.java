@@ -4,7 +4,6 @@ package ie.atu.bam;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,20 +23,8 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
-    
-    @PutMapping("/updateAddress/{oldaddress}/{newaddress}")
-    public String updateAddress(@PathVariable String oldaddress, @PathVariable String newaddress){
-        customerService.updateAddress(oldaddress,newaddress);
-        return "Successfully Updated";
-    }
-
-    @GetMapping("/login/{usrnm}/{psswrd}")
-    public List<Customer> loginCust(@PathVariable String usrnm,@PathVariable String psswrd){
-        return customerService.loginCust(usrnm,psswrd);
-    }
-
     @PostMapping("/createCustomer")
-    public ResponseEntity<String> createCustomer(@Valid @RequestBody Customer customer) {
+    public ResponseEntity<?> createCustomer(@Valid @RequestBody Customer customer) {
         if (customerService.createCustomer(customer) == 1) {
             return new ResponseEntity<>("Person created successfully", HttpStatus.OK);
         }
@@ -46,5 +33,51 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/login/{usrnm}/{psswrd}")
+    public List<Customer> loginCust(@PathVariable String usrnm,@PathVariable String psswrd){
+        return customerService.loginCust(usrnm,psswrd);
+    }
+
+    @PutMapping("withDep/usrnm/{inout}/{num}")
+    public ResponseEntity<?> withdrawDeposit(@PathVariable String usrnm,@PathVariable String inout, @PathVariable int num){
+        if(num <= 0){
+            return new ResponseEntity<String>("Cannot be a negative number", HttpStatus.BAD_REQUEST);
+        }
+        switch (customerService.withDep(usrnm,inout,num)){
+            case
+        }
+
+    }
+
+
+    @PutMapping("/updateAddress/{oldaddress}/{newaddress}")
+    public ResponseEntity<?> updateAddress(@PathVariable String oldaddress, @PathVariable String newaddress){
+        if(customerService.updateAddress(oldaddress,newaddress)==1){
+            return new ResponseEntity<>("Update Successful", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Update failed", HttpStatus.PRECONDITION_FAILED);
+        }
+    }
+
+    @PutMapping("/updateEmail/{oldemail}/{newemail}")
+    public ResponseEntity<?> updateEmail(@PathVariable String oldemail, @PathVariable String newemail){
+        if(customerService.updateEmail(oldemail,newemail)==1){
+            return new ResponseEntity<>("Update Successful", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Update failed", HttpStatus.PRECONDITION_FAILED);
+        }
+    }
+
+    @PutMapping("/updatePhonenm/{oldphonenm}/{newphonenm}")
+    public ResponseEntity<?> updatePhonenm(@PathVariable int oldphonenm, @PathVariable int newphonenm){
+        if(customerService.updatePhonenm(oldphonenm,newphonenm)==1){
+            return new ResponseEntity<>("Update Successful", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Update failed", HttpStatus.PRECONDITION_FAILED);
+        }
+    }
 
 }

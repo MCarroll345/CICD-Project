@@ -32,31 +32,86 @@ public class CustomerService {
         }
     }
 
-    public void updateAddress(String olda, String newa){
-        //customerRepository.
-        return ;
+    public int updateAddress(String olda, String newa){
+        if(customerRepository.addressUpdate(olda,newa) == 1){
+            System.out.println("Update successful");
+            return 1;
+        }
+        else{
+            System.out.println("Update failed");
+            return 0;
+        }
+    }
+
+    public int updateEmail(String olde, String newe){
+        if(customerRepository.emailUpdate(olde,newe) == 1){
+            System.out.println("Update successful");
+            return 1;
+        }
+        else{
+            System.out.println("Update failed");
+            return 0;
+        }
+    }
+
+    public int updatePhonenm(int oldnm, int newnm){
+        if(customerRepository.phonenmUpdate(oldnm,newnm) == 1){
+            System.out.println("Update successful");
+            return 1;
+        }
+        else{
+            System.out.println("Update failed");
+            return 0;
+        }
+    }
+
+    public int withDep(String usrnm, String inout, float num){
+        float newblnc = 0;
+        if(inout == "withdraw"){
+            if(customerRepository.balanceReturn(usrnm) < num){
+                System.out.println("Insufficient funds");
+                return 1;
+            }
+            else{
+                newblnc = customerRepository.balanceReturn(usrnm) - num;
+                customerRepository.newBalance(newblnc, usrnm);
+                return 2;
+            }
+        } else if (inout == "deposit") {
+
+        }
+        switch (inout){
+            case "withdraw":
+                if(customerRepository.balanceReturn(usrnm) < num){
+                    System.out.println("Insufficient funds");
+                    return 1;
+                }
+                else{
+                    newblnc = customerRepository.balanceReturn(usrnm) - num;
+                    customerRepository.newBalance(newblnc, usrnm);
+                    return 2;
+                }
+                break;
+            case "deposit":
+                newblnc = customerRepository.balanceReturn(usrnm) + num;
+                customerRepository.newBalance(newblnc, usrnm);
+                return 3;
+                break;
+            default:
+
+        }
     }
 
     public List<Customer> loginCust(String usrnm, String psswrd){
         if(customerRepository.existsByUsernameAndPassword(usrnm, psswrd)){
-            System.out.println("Success");
+            System.out.println("Login successful");
             return customerRepository.findByUsername(usrnm);
         }
         else {
-            System.out.println("Fail");
+            System.out.println("Login failed");
             return null;
         }
     }
 
-    /*
-    public Customer getCustomer(String username){
-        for(Customer c:myList){
-            if(c.getUsername() == username){
-                return getCustomer(username);
-            }
-        }
-
-        return new Customer();
-    }*/
 }
 
