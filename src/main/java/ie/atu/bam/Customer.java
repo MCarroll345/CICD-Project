@@ -36,12 +36,5 @@ public class Customer {
     private int phonenm;
 
     @NotBlank
-    private String accountId;
-
-    @NotBlank
     private String address;
-
-    @NotNull
-    private float bankBalance;
-
 }

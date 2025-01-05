@@ -26,6 +26,14 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query("update Customer c set c.email = ?2 where c.email =?1")
     int emailUpdate(String oldemail, String newemail);
 
+    @Query("select c.bankBalance from Customer c where c.username = ?1")
+    float balanceReturn(String usrnm);
+
+    @Transactional
+    @Modifying
+    @Query("update Customer c set c.bankBalance = ?1 where c.username =?2")
+    int newBalance(float nb, String usrnm);
+
     boolean existsByUsernameAndPassword(String username, String password);
 
 

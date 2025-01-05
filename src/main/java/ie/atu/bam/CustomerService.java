@@ -44,7 +44,7 @@ public class CustomerService {
     }
 
     public int updateEmail(String olde, String newe){
-        if(customerRepository.addressUpdate(olde,newe) == 1){
+        if(customerRepository.emailUpdate(olde,newe) == 1){
             System.out.println("Update successful");
             return 1;
         }
@@ -65,6 +65,43 @@ public class CustomerService {
         }
     }
 
+    public int withDep(String usrnm, String inout, float num){
+        float newblnc = 0;
+        if(inout == "withdraw"){
+            if(customerRepository.balanceReturn(usrnm) < num){
+                System.out.println("Insufficient funds");
+                return 1;
+            }
+            else{
+                newblnc = customerRepository.balanceReturn(usrnm) - num;
+                customerRepository.newBalance(newblnc, usrnm);
+                return 2;
+            }
+        } else if (inout == "deposit") {
+
+        }
+        switch (inout){
+            case "withdraw":
+                if(customerRepository.balanceReturn(usrnm) < num){
+                    System.out.println("Insufficient funds");
+                    return 1;
+                }
+                else{
+                    newblnc = customerRepository.balanceReturn(usrnm) - num;
+                    customerRepository.newBalance(newblnc, usrnm);
+                    return 2;
+                }
+                break;
+            case "deposit":
+                newblnc = customerRepository.balanceReturn(usrnm) + num;
+                customerRepository.newBalance(newblnc, usrnm);
+                return 3;
+                break;
+            default:
+
+        }
+    }
+
     public List<Customer> loginCust(String usrnm, String psswrd){
         if(customerRepository.existsByUsernameAndPassword(usrnm, psswrd)){
             System.out.println("Login successful");
@@ -76,15 +113,5 @@ public class CustomerService {
         }
     }
 
-    /*
-    public Customer getCustomer(String username){
-        for(Customer c:myList){
-            if(c.getUsername() == username){
-                return getCustomer(username);
-            }
-        }
-
-        return new Customer();
-    }*/
 }
 
