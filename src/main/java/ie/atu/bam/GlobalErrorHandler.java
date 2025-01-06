@@ -22,5 +22,6 @@ public class GlobalErrorHandler {
             errorList.put(err_name,err_message);
         }
         return ResponseEntity.status(400).body(errorList);
+
     }
 }
