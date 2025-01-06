@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.security.auth.callback.ConfirmationCallback.OK;
@@ -19,9 +20,6 @@ public class CustomerController {
         this.bankClient = bankClient;
         this.customerService = customerService;
     }
-
-
-
 
     @GetMapping("/getAll")
     public List<Customer> getCustomers(){
@@ -45,7 +43,12 @@ public class CustomerController {
 
     @PutMapping("withDep/{uID}/{inout}/{num}")
     public ResponseEntity<String> withdrawDeposit(@Valid @PathVariable Long uID,@PathVariable String inout, @PathVariable float num){
-        return bankClient.withdrawDeposit(uID, inout, num);
+        try {
+            String response = bankClient.withdrawDeposit(uID, inout, num).getBody();
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException er) {
+            return ResponseEntity.status(500).body("Error: " + er.getMessage());
+        }
     }
 
     @GetMapping("/getRecs/{uID}")
@@ -53,11 +56,15 @@ public class CustomerController {
         return bankClient.getRecs(uID);
     }
 
-    @PutMapping("/transfer/{IBAN1}/{uID1}/{IBAN2}/{uID2}/{num}")
-    public ResponseEntity<String> transfer(@PathVariable int IBAN1, @PathVariable Long uID1, @PathVariable int IBAN2, @PathVariable Long uID2, @PathVariable float num){
-        return bankClient.transfer(IBAN1, uID1, IBAN2, uID2, num);
+    @PutMapping("/transfer/{IBAN1}/{IBAN2}/{num}")
+    public ResponseEntity<String> transfer(@PathVariable int IBAN1, @PathVariable int IBAN2, @PathVariable float num){
+        try {
+            String response = bankClient.transfer(IBAN1,IBAN2,num).getBody();
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException er) {
+            return ResponseEntity.status(500).body("Error: " + er.getMessage());
+        }
     }
-
 
 
     @PutMapping("/updateAddress/{oldaddress}/{newaddress}")
