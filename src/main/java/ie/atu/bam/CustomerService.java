@@ -39,8 +39,8 @@ public class CustomerService {
         }
     }
 
-    public int updateAddress(String olda, String newa){
-        if(customerRepository.addressUpdate(olda,newa) == 1){
+    public int updateAddress(Long uID, String newa){
+        if(customerRepository.addressUpdate(uID,newa) == 1){
             System.out.println("Update successful");
             return 1;
         }
@@ -50,8 +50,8 @@ public class CustomerService {
         }
     }
 
-    public int updateEmail(String olde, String newe){
-        if(customerRepository.emailUpdate(olde,newe) == 1){
+    public int updateEmail(Long uID, String newe){
+        if(customerRepository.emailUpdate(uID,newe) == 1){
             System.out.println("Update successful");
             return 1;
         }
@@ -61,8 +61,8 @@ public class CustomerService {
         }
     }
 
-    public int updatePhonenm(int oldnm, int newnm){
-        if(customerRepository.phonenmUpdate(oldnm,newnm) == 1){
+    public int updatePhonenm(Long uID, String newnm){
+        if(customerRepository.phonenmUpdate(uID,newnm) == 1){
             System.out.println("Update successful");
             return 1;
         }

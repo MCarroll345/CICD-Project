@@ -32,8 +32,8 @@ public class Customer {
     @Email
     private String email;
 
-    @NotNull
-    private int phonenm;
+    @NotBlank
+    private String phonenm;
 
     @NotBlank
     private String address;

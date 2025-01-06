@@ -16,18 +16,18 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Transactional
     @Modifying
-    @Query("update Customer c set c.address = ?2 where c.address =?1")
-    int addressUpdate(String oldaddress, String newaddress);
+    @Query("update Customer c set c.address = ?2 where c.Id =?1")
+    int addressUpdate(Long uID, String newaddress);
 
     @Transactional
     @Modifying
-    @Query("update Customer c set c.phonenm = ?2 where c.phonenm =?1")
-    int phonenmUpdate(int oldphonenm, int newphonenm);
+    @Query("update Customer c set c.phonenm = ?2 where c.Id =?1")
+    int phonenmUpdate(Long uID, String newphonenm);
 
     @Transactional
     @Modifying
-    @Query("update Customer c set c.email = ?2 where c.email =?1")
-    int emailUpdate(String oldemail, String newemail);
+    @Query("update Customer c set c.email = ?2 where c.Id =?1")
+    int emailUpdate(Long uID, String newemail);
 
     @Query("select c.Id from Customer c where c.username = ?1")
     Long getuID(String usrnm);
