@@ -37,4 +37,14 @@ public class Customer {
 
     @NotBlank
     private String address;
+
+    public Customer(String iName, String iUsr, String iPsswrd, int iAge, String iEmail, String iPhonenm, String iAddress) {
+        name = iName;
+        username = iUsr;
+        password = iPsswrd;
+        age = iAge;
+        email = iEmail;
+        phonenm = iPhonenm;
+        address = iAddress;
+    }
 }
