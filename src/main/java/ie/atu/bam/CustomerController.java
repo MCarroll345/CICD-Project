@@ -6,8 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static javax.security.auth.callback.ConfirmationCallback.OK;
 
@@ -37,8 +36,14 @@ public class CustomerController {
     }
 
     @GetMapping("/login/{usrnm}/{psswrd}")
-    public List<Object> loginCust(@Valid @PathVariable String usrnm,@PathVariable String psswrd){
-        return customerService.loginCust(usrnm,psswrd);
+    public ResponseEntity<List<Object>> loginCust(@Valid @PathVariable String usrnm,@PathVariable String psswrd){
+        try {
+            List<Object> response;
+            response = customerService.loginCust(usrnm,psswrd).stream().toList();
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException eo) {
+            return ResponseEntity.status(500).body(Collections.singletonList("Error: " + eo.getMessage()));
+        }
     }
 
     @PutMapping("withDep/{uID}/{inout}/{num}")
