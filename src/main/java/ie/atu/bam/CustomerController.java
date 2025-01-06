@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static javax.security.auth.callback.ConfirmationCallback.OK;
+
 @RequestMapping("/customer")
 @RestController
 public class CustomerController {
@@ -45,6 +47,17 @@ public class CustomerController {
     public ResponseEntity<String> withdrawDeposit(@Valid @PathVariable Long uID,@PathVariable String inout, @PathVariable float num){
         return bankClient.withdrawDeposit(uID, inout, num);
     }
+
+    @GetMapping("/getRecs/{uID}")
+    public List<Object> getRecs(@PathVariable Long uID){
+        return bankClient.getRecs(uID);
+    }
+
+    @PutMapping("/transfer/{IBAN1}/{uID1}/{IBAN2}/{uID2}/{num}")
+    public ResponseEntity<String> transfer(@PathVariable int IBAN1, @PathVariable Long uID1, @PathVariable int IBAN2, @PathVariable Long uID2, @PathVariable float num){
+        return bankClient.transfer(IBAN1, uID1, IBAN2, uID2, num);
+    }
+
 
 
     @PutMapping("/updateAddress/{oldaddress}/{newaddress}")

@@ -22,12 +22,15 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public List<Object> returnRec(Long uID){
+        return bankClient.getRecs(uID);
+    }
+
 
     public int createCustomer(Customer customer){
         if(!customerRepository.existsByUsernameAndPassword(customer.getUsername(), customer.getPassword())){
             customerRepository.save(customer);
-            bankClient.makeAccount(customer.getId());
-            System.out.println("Customer created: " + customer);
+            System.out.println("Customer created: " + customer + bankClient.makeAccount(customer.getId()));
             return 1;
         }
         else {
