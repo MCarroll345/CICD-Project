@@ -73,7 +73,7 @@ public class CustomerController {
     }
 
 
-    @PutMapping("/updateAddress/{oldaddress}/{newaddress}")
+    @PutMapping("/updateAddress/{uID}/{newaddress}")
     public ResponseEntity<?> updateAddress(@Valid @PathVariable Long uID, @PathVariable String newaddress){
         if(customerService.updateAddress(uID,newaddress)==1){
             return new ResponseEntity<>("Update Successful", HttpStatus.OK);
@@ -83,7 +83,7 @@ public class CustomerController {
         }
     }
 
-    @PutMapping("/updateEmail/{oldemail}/{newemail}")
+    @PutMapping("/updateEmail/{uID}/{newemail}")
     public ResponseEntity<?> updateEmail(@Valid @PathVariable Long uID, @PathVariable String newemail){
         if(customerService.updateEmail(uID,newemail)==1){
             return new ResponseEntity<>("Update Successful", HttpStatus.OK);
@@ -93,7 +93,7 @@ public class CustomerController {
         }
     }
 
-    @PutMapping("/updatePhonenm/{oldphonenm}/{newphonenm}")
+    @PutMapping("/updatePhonenm/{uID}/{newphonenm}")
     public ResponseEntity<?> updatePhonenm(@Valid @PathVariable Long uID, @PathVariable String newphonenm){
         if(customerService.updatePhonenm(uID,newphonenm)==1){
             return new ResponseEntity<>("Update Successful", HttpStatus.OK);
