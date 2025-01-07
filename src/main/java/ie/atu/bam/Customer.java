@@ -29,6 +29,7 @@ public class Customer {
     @Min(16)
     private int age;
 
+    @NotBlank
     @Email
     private String email;
 
