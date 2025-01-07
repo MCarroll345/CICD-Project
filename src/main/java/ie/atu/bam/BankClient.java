@@ -20,8 +20,8 @@ public interface BankClient {
     @GetMapping("/login/{uID}")
     List<Object> loginAcc(@PathVariable Long uID);
 
-    @PutMapping("withDep/{uID}/{inout}/{num}")
-    ResponseEntity<String> withdrawDeposit(@Valid @PathVariable Long uID, @PathVariable String inout, @PathVariable float num);
+    @PutMapping("withDep/{IBAN}/{inout}/{num}")
+    ResponseEntity<String> withdrawDeposit(@Valid @PathVariable int IBAN, @PathVariable String inout, @PathVariable float num);
 
     @GetMapping("/getRecs/{uID}")
     List<Object> getRecs(@PathVariable Long uID);
