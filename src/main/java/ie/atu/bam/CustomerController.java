@@ -47,10 +47,10 @@ public class CustomerController {
         }
     }
 
-    @PutMapping("withDep/{uID}/{inout}/{num}")
-    public ResponseEntity<String> withdrawDeposit(@Valid @PathVariable Long uID,@PathVariable String inout, @PathVariable float num){
+    @PutMapping("withDep/{IBAN}/{inout}/{num}")
+    public ResponseEntity<String> withdrawDeposit(@Valid @PathVariable int IBAN,@PathVariable String inout, @PathVariable float num){
         try {
-            String response = bankClient.withdrawDeposit(uID, inout, num).getBody();
+            String response = bankClient.withdrawDeposit(IBAN, inout, num).getBody();
             return ResponseEntity.ok(response);
         } catch (RuntimeException er) {
             return ResponseEntity.status(500).body("Error: " + er.getMessage());
