@@ -26,5 +26,5 @@ public interface BankClient {
     ResponseEntity<String> transfer(@PathVariable int IBAN1,@PathVariable int IBAN2,@PathVariable float num);
 
     @DeleteMapping("deleteAcc/{uID}")
-    ResponseEntity<String> deleteAcc(@Valid @PathVariable Long uID);
+    String deleteAcc(@Valid @PathVariable Long uID);
 }
