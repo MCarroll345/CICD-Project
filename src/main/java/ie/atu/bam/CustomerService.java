@@ -1,6 +1,7 @@
 package ie.atu.bam;
 
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +86,12 @@ public class CustomerService {
             System.out.println("Login failed");
             return null;
         }
+    }
+
+    public ResponseEntity<String> deleteAcc(Long uID){
+        customerRepository.deleteAcc(uID);
+        System.out.println("Account ID "+uID+" Deleted");
+        return new ResponseEntity<>("Account deleted "+ bankClient.deleteAcc(uID), HttpStatus.OK);
     }
 
 }
