@@ -102,4 +102,14 @@ public class CustomerController {
         }
     }
 
+    @DeleteMapping("deleteAcc/{uID}")
+    public ResponseEntity<String> deleteAcc(@Valid @PathVariable Long uID){
+        try {
+            String response = customerService.deleteAcc(uID).getBody();
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(500).body("Error: " + ex.getMessage());
+        }
+    }
+
 }

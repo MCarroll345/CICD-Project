@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,5 +32,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Long getuID(String usrnm);
     boolean existsByUsernameAndPassword(String username, String password);
 
+    @Transactional
+    @Modifying
+    @Query("delete Customer c where c.Id = ?1")
+    int deleteAcc(Long uID);
 
 }

@@ -2,12 +2,8 @@ package ie.atu.bam;
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,4 +24,7 @@ public interface BankClient {
 
     @PutMapping("/transfer/{IBAN1}/{IBAN2}/{num}")
     ResponseEntity<String> transfer(@PathVariable int IBAN1,@PathVariable int IBAN2,@PathVariable float num);
+
+    @DeleteMapping("deleteAcc/{uID}")
+    ResponseEntity<String> deleteAcc(@Valid @PathVariable Long uID);
 }
